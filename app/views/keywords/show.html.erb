@@ -1,0 +1,51 @@
+
+    <div class="about_db">
+        <h1>チェックする用語一覧</h1>
+        <a>表示方法：　</a>
+
+        <a id="bold">五十音順</a>
+        <a><%=link_to("作成順","/keywords/index")%></a>
+        <a><%=link_to("用語登録","/keywords/db")%></a>
+    </div>
+
+  <table>
+      <tbody>
+          <tr>
+              <th>No</th>
+              <th>用語</th>
+              <th>よみがな</th>
+              <th>作成日</th>
+              <th>操作</th>
+          </tr>
+
+          <%@keywords.each do |keyword|%>
+              <%= form_tag("/keywords/destroy_show")do%>
+                  <tr>
+                      <td><%= keyword.id %></td>
+                      <td><%= keyword.content %></td>
+                      <td><%= keyword.kana %></td>
+                      <td><%= keyword.created_at.strftime("%Y/%m/%d")%></td>
+                      <td><input type="hidden" name="id" value=<%=keyword.id%>>
+                      <button type="submit" class="destroy" >削除</button></td>
+                  </tr>
+              <%end%>
+          <% end %>
+
+      </tbody>
+  </table>
+
+
+
+
+  <%= form_tag("/keywords/create_show")do%>
+      <div class="form">
+         <div class="form-body">
+            <input name="content" placeholder="追加する用語">
+            <input name="kana" placeholder="よみがな">
+            <input class="register" type="submit" value="登録">
+         </div>
+    </div>
+  <% end %>
+
+
+ <%= button_to("ログアウトはこちらから","/logout",{method:"post"}) %>

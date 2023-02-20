@@ -1,0 +1,23 @@
+<div class="main users-new">
+  <div class="container">
+    <div class="form users-form">
+      <div class="form">
+
+        <%= form_tag("/login") do %>
+          <p>ID</p>
+          <input name="id" value="<%=@id %>">
+          <p>パスワード</p>
+          <input  type="password" name="password" value="<%=@password%>">
+          <p></p>
+          <input class="btn-square-pop" type="submit" value="ログイン">
+        <% end %>
+      </div>
+    </div>
+
+        <% if @error_message %>
+          <div class="form-error">
+            <%= @error_message %>
+          </div>
+        <% end %>
+  </div>
+</div>

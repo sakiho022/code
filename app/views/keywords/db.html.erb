@@ -1,0 +1,92 @@
+
+    <div class="about_db">
+        <h1>チェックする用語一覧</h1>
+        <a>表示方法：　</a>
+        <a><%=link_to("五十音順","/keywords/show")%></a>
+        <a><%=link_to("作成順","/keywords/index")%></a>
+        <a id="bold">用語登録</a>
+    </div>
+
+<%= form_with url:"/keywords/db",local:true,data:{turbo:false} do |f|%>
+    <div class="form">
+        <div class="form-body">
+            <input name="name" placeholder="追加する用語">
+            <input name="kana" placeholder="よみがな">
+            <input type="hidden" name="boolean" value=1>
+            <select name="category">
+                <% @category.each do |category| %>
+                    <option value="<%=category.id%>"><%=category.category_name%></option>
+                <% end %>
+            </select>
+            <input class="register" type="submit" value="登録">
+        </div>
+    </div>
+<% end %>
+
+
+      
+<p>テストはここ。→<%=@error_message%></p>
+
+<h3>登録用語</h3>
+ <table>
+      <tbody>
+          <tr>
+              <th>No</th>
+              <th>用語</th>
+              <th>よみがな</th>
+          </tr>
+
+          <% @keywords.each do |keyword|%>
+                <tr>
+                    <td><%= keyword.id %></td>
+                    <td><%= keyword.content %></td>
+                    <td><%= keyword.kana %></td>
+                </tr>
+          <% end %>
+
+      </tbody>
+  </table>
+
+
+
+<h3>カテゴリー</h3>
+<table>
+    <tbody>
+        <tr>
+            <th>ID</th>
+            <th>Category_name</th>
+
+
+        </tr>
+
+        <% @category.each do |keyword|%>
+            <tr>
+                <td><%= keyword.id %></td>
+                <td><%= keyword.category_name %></td>
+            </tr>
+        <% end %>
+
+    </tbody>
+</table>
+
+<h3>中間テーブル</h3>
+<table>
+    <tbody>
+        <tr>
+            <th>keyword_id</th>
+            <th>category_id</th>
+        </tr>
+
+        <% @relation.each do |keyword|%>
+            <tr>
+                <td><%= keyword.keyword_id %></td>
+                <td><%= keyword.category_id %></td>
+            </tr>
+        <% end %>
+
+    </tbody>
+</table>
+
+
+   <%= button_to("ログアウトはこちらから","/logout",{method:"post"}) %>
+

@@ -1,0 +1,57 @@
+
+
+<%= form_with url:"/keywords/data",local:true,data:{turbo:false} do |form|%>
+    <div class="form">
+        <%= form.collection_select :category, Category.order(:id), :id, :category_name ,selected: params[:category]%>
+        <input class="register" type="submit" value="の表を見る">
+    </div>
+<% end %>
+
+
+<% if params[:category] then%>
+    <div class="theme">
+    <h1><%=Category.find_by(id:params[:category]).category_name%>の用語一覧です</h1>
+    </div>
+    <% disability=Keyword.joins(:relations).where(relations: { category_id:params[:category]}).order(kana: :asc)%>
+    <table>
+        <tbody>
+            <tr>
+                <th>用語</th>
+                <th>かな</th>
+            </tr>
+
+            <% disability.each do |f|%>
+                    <tr>
+                        <td><%= f.content%></td>
+                        <td><%= f.kana%></td>
+                    </tr>
+            <% end %>
+            </tbody>
+    </table>
+<%else%>
+    <div class="theme">
+    <h1>登録されているすべてのデータ</h1>
+    </div>
+    <table>
+        <tbody>
+            <tr>
+                <th>用語</th>
+                <th>かな</th>
+
+            </tr>
+
+
+
+            <% @keywords.each do |f|%>
+
+                    <tr>
+                        <td><%= f.content%></td>
+                        <td><%= f.kana%></td>
+                    </tr>
+            <% end %>
+            </tbody>
+    </table>
+
+
+<%end%>
+

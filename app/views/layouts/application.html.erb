@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>文字チェッカー</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %> 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+  </head>
+
+  <body>
+    <header>
+  
+      <div class="head_container">
+          <h1 id="logo" ><%=link_to('文字チェッカー','/')%></h1>
+        
+        <div class="head_link_menu">
+          <nav>
+              <ul>
+              <%url_now=request.fullpath%>
+              <% urls=["/","/about/how","/keywords/data","/about",'/keywords/show']%>
+              <% urls_title=["文字チェッカー","使い方","チェックする用語","ABOUT","管理画面"]%>
+              <% i=0 %>
+
+              <% while i<urls.length %>
+                  <% if url_now==urls[i]%>
+                      <a href="<%=urls[i]%>" class="line"><%=urls_title[i]%></a>
+                  <%else%>
+                      <%if i==4 && (url_now=='/login' || url_now=='/keywords/index')%>
+                        <a href="<%=urls[i]%>" class="line"><%=urls_title[i]%></a>
+                      <%else%>
+                        <a href="<%=urls[i]%>"><%=urls_title[i]%></a>
+                      <%end%>
+                  <%end%>
+                  <% i+=1 %>
+              <%end%>
+              </ul>
+          </nav>
+        </div>
+
+
+        <%# ここから、リンク先を表示する %>
+        <div class="hamburger-menu">
+          <input type="checkbox" id="menu-btn-check">
+          <label for="menu-btn-check" class="menu-btn"><span></span></label>
+          <!--ここからメニュー-->
+          <div class="menu-content">
+            <nav>
+              <ul>
+              <% i=0%>
+              <%while i<urls.length do%>
+                  <li><a href="<%=urls[i]%>"><%=urls_title[i]%></a></li>
+                <% i+=1%>
+                <%end%>
+              </ul>
+            </nav>
+          </div>
+          <!--ここまでメニュー-->
+        </div>
+      </div>
+
+
+
+      
+      
+
+
+    
+    </header>
+
+      <% if flash[:notice]%>
+        <div class="flash">
+          <%= flash[:notice]%>
+        </div>
+      <% end %>
+
+      
+    <main>
+
+
+
+      <%= yield %>
+
+
+    </main>
+</body>
+      <%# <footer>
+      <div class="footer_container">
+        <a>For Everyone</a>
+      </div>
+    </footer> %>
+
+</html>

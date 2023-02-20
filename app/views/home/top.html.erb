@@ -1,0 +1,35 @@
+<div class="explanation">
+    <h2>〇〇<span>チェック</span>ツール</h2>
+    <p>見つける用語一覧は<a id="blue"><%=link_to'チェックする用語','/keywords/data'%></a>からご覧ください。文章はサイトに保存されません。</p>
+    <input class="sample_button" value="動作確認用のテキストを挿入" onclick='document.querySelector("textarea[name=content]").value = "　「障がいをもつ」という言葉は適切ではありません。障がいを「もつ」という表現は、何らかの障がいや疾病を患っているその人に障がいがあるという意味合いになります。しかし、本当の問題は、「社会生活を送る上で、障がいが起こる」ことです。車いすの段差をスロープに変更するなどの工夫があれば、社会や環境の障がいをなくすことができます。そのため、「障がいをもつ人」ではなく、「障がいのある人」と表すことが適切です。\n　また障がいを「障害」というのも適切ではありません。理由は、障がいをもつという表現を使う理由と同様で、「障害は本人ではなく、社会の側にある」という考えに基づいています。「本人に害があるという意味ではない」ことから、「障がい」と表すことが適切です。\n　ほかにも、「手短に」といった身体表現にも注意が必要です。「手短に」という言葉は、もともと差別用語ではありませんでした。しかし四肢に異常をきたす障がいをもつ人がいるということから、「身体的な異常」を意味する言葉として、差別用語として扱われるようになりました。"'>
+</div>    
+
+    
+<%= form_with url:"/#result",local:true,data:{turbo:false} do |form| %>
+  
+    <div class="check-button">
+        <input type="hidden" name="checked[]" value=0>
+        <% @category.each do |c|%>
+            <label><input type="checkbox" value="<%=c.id%>" checked="checked" name="checked[]" ><%=c.category_name%></label>
+        <%end%>
+    </div>
+    <div class="check-form">
+        <textarea name="content" rows="30" placeholder="ここに、特定の用語があるかどうかを確認したい文章を入れてください。"><%=params[:content]%></textarea>
+        <input class="button" type="submit" value="CHECK">
+    </div>
+<% end %>
+
+
+
+
+<div class="result" id="result">
+    <% if params[:content]%>
+    <!--spanタグの空白を埋めるために改行しない ！-->
+        <% i=0 
+        while i<@output.length do%><span class= <%=@colors[i]%>><%=@output[i].html_safe%></span><% i+=1 %><% end%>
+    <% else %>
+        <div class="kekka" >結果がここに表示されます。</div>
+    <% end %>
+</div>
+
+<div class="message"><span class="red"><%=@message%></span></div>
